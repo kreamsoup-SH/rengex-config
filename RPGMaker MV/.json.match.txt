@@ -82,6 +82,11 @@
 # pan이나 volume키가 나오는지 검사
 \s*,\s*"(pan|volume)"\s*:
 
+# Map___.json에 들어있는 명칭 스킵
+# Map025.json: {"code":357,"indent":0,"parameters":["Nore_Tes","Run","実行",{"id":"称号説明"}]},
+#              {"code":657,"indent":0,"parameters":["ファイル名 = 称号説明"]}
+|"code":357\s*,[^}]*?"id":".*?"
+
 # 일본어가 들어있는 값 문자열
 |"
 (?<val>(?>\\.|[^"])*?[\jp](?>\\.|[^"])*)
