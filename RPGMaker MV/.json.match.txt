@@ -49,17 +49,22 @@
 # 내용 끝 공백, 기타 문자
 (?>\s|\\.)*"
 
-# First word of code 356 parameters is plugin command
+# First word of code 356 parameters is plugin command and following words are arguments separated by half-width space.
 # https://kinoar.github.io/rmmv-doc-web/classes/game_interpreter.html#plugincommand
 # Map061.json: [{"code":356,"indent":0,"parameters":["<NES말풍선 대상:1>"]},..
 # CommonEvents.json: {"code":356,"indent":0,"parameters":["ピクチャのボタン化 2 113 4 OFF"]}
 |"code":\s*?356,\s*?"indent":\s*?\d+?,\s*?"parameters":\[\s*?"\s*?(?>[^\s"]+)\s+?
-(?:
-  # 일본어가 들어있으면 추출
-  (?<arg3>(?>\\.|[^"])*?[\jp](?>\\.|[^"])*?)
-    # 없으면 무시
-    |(?>\\.|[^"])*?
-)"
+(?:(?:
+  # 일본어가 들어있으면 추출.
+  (?<arg3>
+    # 공백이 나오면 다음 인자로 취급하므로 번역 이후 공백을 제거해야 함.
+    (?>\\.|[^" ])*[\jp](?>\\.|[^" ])*
+  )
+  # 없으면 무시
+  |(?>\\.|[^" ])*
+# 다음 인자 추출
+)[ ]*?)*?
+"
 
 # Tilesets.json에 들어있는 이미지 파일명 배열 스킵
 |"tilesetNames"\s*:\s*\[(
