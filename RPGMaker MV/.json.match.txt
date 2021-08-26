@@ -59,6 +59,14 @@
 # Map046.json: "parallaxLoopY":false,"parallaxName":"하늘 2","parallaxShow":
 |"parallaxLoopY"\s*:\s*(false|true)\s*,\s*"parallaxName"\s*:\s*"(?>\\.|[^"\n])*"\s*,\s*"parallaxShow"\s*:
 
+# Map___.json에 들어가는 img/parallax 파일명 스킵
+# {"code":284,"indent":1,"parameters":["午前",false,false,0,0]}
+|"code"\s*?:\s*?284\s*?,\s*?"indent"\s*?:\s*?\d+\s*?,\s*?"parameters"\s*?:\s*?\[\s*?"(?>\\.|[^"\n])*"
+
+# Map___.json에 들어가는 img/characters 파일명 스킵
+# {"code":322,"indent":1,"parameters":[1,"キャラクター１_MV",3,"",0,""]}
+|"code"\s*?:\s*?322\s*?,\s*?"indent"\s*?:\s*?\d+\s*?,\s*?"parameters"\s*?:\s*?\[.*?,"(?>\\.|[^"\n])*"
+
 # Map___.json에 들어있는 사운드 파일명 스킵
 # 배경음: {"code":241,"indent":0,"parameters":[{"name":"04_学園街","volume":30,"pitch":100,"pan":0}]}
 # 효과음: {"code":250,"indent":0,"parameters":[{"name":"Move1","pan":0,"pitch":100,"volume":90}]}
