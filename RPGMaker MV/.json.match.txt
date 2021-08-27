@@ -10,11 +10,25 @@
 
 # The followings are all exception rules except the last one.
 
+# Actors.json: img/actors, img/sv_actors
+# Enemies.json: img/enemies, img/sv_enemies
+# System.json: img/sv_enemies
+# "battlerHue":0,"battlerName":"슬라임 퀸","dropItems"
+|"battlerName"\s*:\s*"(?>\\.|[^"\n])*?"
+
 # Actors.json
-# {"id":1,"battlerName":"","characterIndex":0,"characterName":"$043_마하","classId":1,"equips":[1,11,2]
-|"characterName"\s*:\s*"(?>\\.|[^"\n])*"\s*,\s*"classId"\s*:
+# img/sv_actors/A_ティーナ（戦闘）.rpgmvp, img/characters/A_ティーナ(歩行).rpgmvp
+# {"id":1,"battlerName":"A_ティーナ（戦闘）","characterIndex":0,"characterName":"A_ティーナ(歩行)",
+|"characterIndex"\s*:\s*\d+,\s*"characterName"\s*:\s*"(?>\\.|[^"\n])*"
+# img/faces
 # "faceIndex":0,"faceName":"サシャ顔１","traits":[]
-|"faceIndex"\s*:\s*\d+\s*,\s*"faceName"\s*:\s*"(?>\\.|[^"\n])*"\s*
+|"faceIndex"\s*:\s*\d+\s*,\s*"faceName"\s*:\s*"(?>\\.|[^"\n])*"
+
+# Animations.json 
+# www/img/animations/火13.rpgmvp, www/img/animations/火8.rpgmvp
+# {"id":126,"animation1Hue":0,"animation1Name":"火13","animation2Hue":0,"animation2Name":"火8","frames":[[[]]]
+|"animation1Hue"\s*:\s*\d+\s*,\s*"animation1Name"\s*:\s*"(?>\\.|[^"\n])*"\s*,
+"animation2Hue"\s*:\s*\d+\s*,\s*"animation2Name"\s*:\s*"(?>\\.|[^"\n])*"\s*,
 
 # First word of code 356 parameters is plugin command and following words are arguments separated by half-width space.
 # https://kinoar.github.io/rmmv-doc-web/classes/game_interpreter.html#plugincommand
@@ -33,43 +47,9 @@
 )[ ]*?)*?
 "
 
-# Tilesets.json에 들어있는 이미지 파일명 배열 스킵
-|"tilesetNames"\s*:\s*\[(
-  # 파일명 문자열
-  "(?>\\.|[^"\n])*"
-  # , 등 다른 내용
-  |[^"\]]+
-)*?\]
-
-# Enemies.json
-# "battlerHue":0,"battlerName":"슬라임 퀸","dropItems"
-|"battlerHue"\s*:\s*\d+\s*,\s*"battlerName"\s*:\s*"(?>\\.|[^"\n])*?"
-
-# Map___.json에 들어있는 이미지 파일명 스킵
-# Map004.json: ,{"code":101,"indent":0,"parameters":["사샤얼굴 2",7,0,2]}
-|"code"\s*:\s*101\s*,\s*"indent"\s*:\s*\d+\s*,\s*"parameters"\s*:\s*\[\s*"(?>\\.|[^"\n])*?"
-# Map004.json: {"code":231,"indent":0,"parameters":[30,"사샤 1＿통상",0,1,25,26,100,100,255,0]}
-|"code"\s*:\s*231\s*,\s*"indent"\s*:\s*\d+\s*,\s*"parameters"\s*:\s*\[\s*\d+\s*,\s*"(?>\\.|[^"\n])*?"
-# Map019.json: "note":"<fgName:! 마을 외관> <fgLoopY:0> <fgLoopX:0>\n\n\n",
-|"note"\s*:\s*"(?>\\.|[^"\n])*?<fgName:.*?>(?>\\.|[^"\n])*?"
-# Map022.json: image":{"tileId":0,"characterName":"$008_아저씨","direction":2,"pattern":1,"characterIndex":0},
-|"tileId"\s*:\s*\d+\s*,"characterName"\s*:\s*"(?>\\.|[^"\n])*"
-# Map034.json: {"code": 41,"parameters":["$043_마하",0],"indent":null}
-|(?<={)"code"\s*:\s*41\s*,\s*"parameters"\s*:\s*\[\s*"(?>\\.|[^"\n])*".*?\]\s*,\s*"indent"
-# Map046.json: "parallaxLoopY":false,"parallaxName":"하늘 2","parallaxShow":
-|"parallaxLoopY"\s*:\s*(false|true)\s*,\s*"parallaxName"\s*:\s*"(?>\\.|[^"\n])*"\s*,\s*"parallaxShow"\s*:
-
-# Map___.json에 들어가는 img/parallax 파일명 스킵
-# {"code":284,"indent":1,"parameters":["午前",false,false,0,0]}
-|"code"\s*?:\s*?284\s*?,\s*?"indent"\s*?:\s*?\d+\s*?,\s*?"parameters"\s*?:\s*?\[\s*?"(?>\\.|[^"\n])*"
-
-# Map___.json에 들어가는 img/characters 파일명 스킵
-# {"code":322,"indent":1,"parameters":[1,"キャラクター１_MV",3,"",0,""]}
-|"code"\s*?:\s*?322\s*?,\s*?"indent"\s*?:\s*?\d+\s*?,\s*?"parameters"\s*?:\s*?\[.*?,"(?>\\.|[^"\n])*"
-
-# Map___.json에 들어있는 사운드 파일명 스킵
-# 배경음: {"code":241,"indent":0,"parameters":[{"name":"04_学園街","volume":30,"pitch":100,"pan":0}]}
-# 효과음: {"code":250,"indent":0,"parameters":[{"name":"Move1","pan":0,"pitch":100,"volume":90}]}
+# Map___.json: audio/...
+# bgm: {"code":241,"indent":0,"parameters":[{"name":"04_学園街","volume":30,"pitch":100,"pan":0}]}
+# se: {"code":250,"indent":0,"parameters":[{"name":"Move1","pan":0,"pitch":100,"volume":90}]}
 # name이 키로 나오면
 |"name"\s*:\s*
 # 사운드 파일명 문자열로 의심
@@ -77,10 +57,48 @@
 # pan이나 volume키가 나오는지 검사
 \s*,\s*"(pan|volume)"\s*:
 
+# Map___.json: img/pictures
+# {"code":101,"indent":0,"parameters":["사샤얼굴 2",7,0,2]}
+|"code"\s*:\s*101\s*,\s*"indent"\s*:\s*\d+\s*,\s*"parameters"\s*:\s*\[\s*"(?>\\.|[^"\n])*?"
+# {"code":231,"indent":0,"parameters":[30,"사샤 1＿통상",0,1,25,26,100,100,255,0]}
+|"code"\s*:\s*231\s*,\s*"indent"\s*:\s*\d+\s*,\s*"parameters"\s*:\s*\[\s*\d+\s*,\s*"(?>\\.|[^"\n])*?"
+# {"code": 41,"parameters":["$043_마하",0],"indent":null}
+|"code"\s*:\s*41\s*,\s*"parameters"\s*:\s*\[\s*"(?>\\.|[^"\n])*".*?\]\s*,\s*"indent"
+
+# Map___.json, System.json: img/battlebacks1, img/battlebacks2
+|"battleback1Name"\s*?:\s*?"(?>\\.|[^"\n])*"\s*?,\s*?
+"battleback2Name"\s*?:\s*?"(?>\\.|[^"\n])*"
+
+# Map___.json: img/characters
+# "image":{"tileId":0,"characterName":"$008_아저씨","direction":2,"pattern":1,"characterIndex":0},
+|"tileId"\s*:\s*\d+\s*,"characterName"\s*:\s*"(?>\\.|[^"\n])*"
+# {"code":322,"indent":1,"parameters":[1,"キャラクター１_MV",3,"",0,""]}
+|"code"\s*?:\s*?322\s*?,\s*?"indent"\s*?:\s*?\d+\s*?,\s*?"parameters"\s*?:\s*?\[.*?,"(?>\\.|[^"\n])*"
+
+# Map___.json, img/parallax
+# "parallaxLoopY":false,"parallaxName":"하늘 2","parallaxShow":
+|"parallaxLoopY"\s*:\s*(false|true)\s*,\s*"parallaxName"\s*:\s*"(?>\\.|[^"\n])*"\s*,\s*"parallaxShow"\s*:
+# {"code":284,"indent":1,"parameters":["午前",false,false,0,0]}
+|"code"\s*?:\s*?284\s*?,\s*?"indent"\s*?:\s*?\d+\s*?,\s*?"parameters"\s*?:\s*?\[\s*?"(?>\\.|[^"\n])*"
+
 # Map___.json에 들어있는 명칭 스킵
 # Map025.json: {"code":357,"indent":0,"parameters":["Nore_Tes","Run","実行",{"id":"称号説明"}]},
 #              {"code":657,"indent":0,"parameters":["ファイル名 = 称号説明"]}
 |"code":357\s*,[^}]*?"id":".*?"
+
+# System.json
+# img/titles1/タイトル画面.rpgmvp, audio/bgm/Event_1_MapBGM_variation2.rpgmvo
+|"title1Name"\s*:\s*"(?>\\.|[^"\n])*"\s*,\s*
+"title2Name"\s*:\s*"(?>\\.|[^"\n])*"\s*,\s*
+"titleBgm"\s*:\s*{\s*"name"\s*:\s*"(?>\\.|[^"\n])*"
+
+# Tilesets.json: img/tilesets
+|"tilesetNames"\s*:\s*\[(
+  # 파일명 문자열
+  "(?>\\.|[^"\n])*"
+  # , 등 다른 내용
+  |[^"\]]+
+)*?\]
 
 # Angle bracket directives appears commonly.
 # Actors.json: {"id":1,"battlerName":"", ... "maxLevel":50,"name":"ソフィー","nickname":"探偵見習い","note":"<CSS_画像:sophie_status>\nImage Position 0\nbgi offset X: 0\nbgi offset Y: 0\n</CSS_画像>\n\n<CSS_画像:sophie2_status>\nImage Position 0\nbgi offset X: 0\nbgi offset Y: 0\n</CSS_画像>\n\n<CSS_画像:sophie3_status>\nImage Position 0\nbgi offset X: 0\nbgi offset Y: 0\n</CSS_画像>\n","profile":""},
