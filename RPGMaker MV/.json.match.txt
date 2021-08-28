@@ -30,8 +30,17 @@
 |"animation1Hue"\s*:\s*\d+\s*,\s*"animation1Name"\s*:\s*"(?>\\.|[^"\n])*"\s*,
 "animation2Hue"\s*:\s*\d+\s*,\s*"animation2Name"\s*:\s*"(?>\\.|[^"\n])*"\s*,
 
+# js/rpg_objects.js:9306 conditional branch
+# {"code":111,"indent":1,"parameters":[12,"~$dataMap.events[$gameVariables.value(124)].note.indexOf(\"[非対象者]\")"]}
+|"code":\s*?111,\s*?"indent":\s*?\d+?,\s*?"parameters":\s*?\[\s*?12,\s*?"(?>\\.|[^"\n])*"\s*?\]
+
+# js/rpg_objects.js:10494 code 355: script, 655: continued script
+# {"code":355,"indent":0,"parameters":["var targetID = $gameVariables.value(124);"]},{"code":655,"indent":0,"parameters":["if(targetID != 0 && ~$dataMap.events[targetID].note.indexOf(\"[対象者]\")){"]},
+|"code":\s*?355,\s*?"indent":\s*?\d+?,\s*?"parameters":\s*?\[\s*?"(?>\\.|[^"\n])*"\s*?\]
+|"code":\s*?655,\s*?"indent":\s*?\d+?,\s*?"parameters":\s*?\[\s*?"(?>\\.|[^"\n])*"\s*?\]
+
 # First word of code 356 parameters is plugin command and following words are arguments separated by half-width space.
-# https://kinoar.github.io/rmmv-doc-web/classes/game_interpreter.html#plugincommand
+# js/rpg_objects.js:10506
 # Map061.json: [{"code":356,"indent":0,"parameters":["<NES말풍선 대상:1>"]},..
 # CommonEvents.json: {"code":356,"indent":0,"parameters":["ピクチャのボタン化 2 113 4 OFF"]}
 |"code":\s*?356,\s*?"indent":\s*?\d+?,\s*?"parameters":\[\s*?"\s*?(?>[^\s"]+)\s+?
