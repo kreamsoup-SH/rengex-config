@@ -5,7 +5,8 @@ The storage of config files for [rengex tool](https://github.com/nanikit/Rengex)
   
 
 
-forked from [nanikit/rengex-config](https://github.com/nanikit/rengex-config)
+forked from [nanikit/rengex-config](https://github.com/nanikit/rengex-config)  
+
 ---
 # Rengex 설정 보관소
 
