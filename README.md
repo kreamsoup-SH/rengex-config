@@ -1,5 +1,5 @@
 # Rengex 설정 보관소
-The storage of config files for [rengex tool](https://github.com/nanikit/Rengex) by [nanikit](https://github.com/nanikit)
+The storage of config files for [rengex tool](https://github.com/nanikit/Rengex) by [nanikit](https://github.com/nanikit)  
 I added configs for cartagraFHD.
   
   
