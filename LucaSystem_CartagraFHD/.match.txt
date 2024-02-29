@@ -3,4 +3,4 @@
 # 닷넷 정규식 문법 URL: https://docs.microsoft.com/ko-kr/dotnet/standard/base-types/regular-expression-language-quick-reference
 # 정규식 테스트 URL: https://regex101.com/r/dqgl16/1
 
-(MESSAGE|LOG_BEGIN|SELECT)+ .* \( [0-9x,\s]* ("(?<txt>[^"]*)")
+(MESSAGE|LOG_BEGIN|SELECT|DIALOG)+ .* \( [0-9x,\s]* ("(?<txt>[^"]*)")
